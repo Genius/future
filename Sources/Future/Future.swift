@@ -39,7 +39,7 @@ Sets the final state of the associated Future to the value, and
 immediately calls all then() observers with the value.
 */
 
-        func resolve(value: Value) {
+        public func resolve(value: Value) {
             self._future?.resolve(value: value)
             self._future = nil
         }
@@ -49,7 +49,7 @@ Sets the final state of the associated Future to the error, and
 immediately calls all catch() observers with the error.
 */
 
-        func reject(error: Error) {
+        public func reject(error: Error) {
             self._future?.reject(error: error)
             self._future = nil
         }
