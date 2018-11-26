@@ -1,3 +1,8 @@
+// ====--------------------------------------------------------====
+// Futures
+// https://github.com/genius/future
+// ====--------------------------------------------------------====
+
 import Foundation
 
 /**
@@ -29,7 +34,9 @@ blocks on the Future
 */
 
     public final class Resolver {
+        private(set) public var isResolved = false
         fileprivate weak var _future: Future<T, E>?
+        
         fileprivate init(_ future: Future<T, E>) {
             self._future = future
         }
@@ -80,7 +87,6 @@ immediately calls all catch() observers with the error.
     
     private func resolve(value: Value) {
         guard !self.isResolved else {
-            // TODO: Is returning early here the right decision?
             return
         }
         
@@ -90,7 +96,6 @@ immediately calls all catch() observers with the error.
     
     private func reject(error: Error) {
         guard !self.isResolved else {
-            // TODO: Is returning early here the right decision?
             return
         }
 
