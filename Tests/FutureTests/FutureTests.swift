@@ -1,3 +1,8 @@
+// ====--------------------------------------------------------====
+// Futures
+// https://github.com/genius/future
+// ====--------------------------------------------------------====
+
 import XCTest
 @testable import Future
 
@@ -5,6 +10,8 @@ private enum FutureError: Int, Error {
     case failure
     case otherFailure
 }
+
+// ====--------------------------------------------------------====
 
 final class FutureTests: XCTestCase {
     static var allTests = [
