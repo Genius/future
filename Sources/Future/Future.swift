@@ -35,7 +35,7 @@ blocks on the Future
 
     public final class Resolver {
         private(set) public var isResolved = false
-        fileprivate weak var _future: Future<T, E>?
+        fileprivate var _future: Future<T, E>?
         
         fileprivate init(_ future: Future<T, E>) {
             self._future = future
@@ -169,7 +169,7 @@ called whenever the Future completes.
     }
 }
 
-extension Future.Resolver where T == Void {
+public extension Future.Resolver where T == Void {
     func resolve() {
         self.resolve(value: ())
     }
