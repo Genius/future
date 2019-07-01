@@ -124,6 +124,13 @@ when this has occurred. Returns itself.
         return self
     }
     
+    @discardableResult
+    public func then(on: DispatchQueue, block: @escaping ((Value) -> Void)) -> Future<Value, Error> {
+        return self.then { value in
+            on.async { block(value) }
+        }
+    }
+    
 /**
 Adds an error handler which will be invoked immediately if the Future has
 already been rejected with an Error, or some time in the future
@@ -140,6 +147,13 @@ when this has occurred. Returns itself.
         }
         
         return self
+    }
+
+    @discardableResult
+    public func `catch`(on: DispatchQueue, block: @escaping ((Error) -> Void)) -> Future<Value, Error> {
+        return self.catch { error in
+            on.async { block(error) }
+        }
     }
     
 /**
@@ -172,5 +186,13 @@ called whenever the Future completes.
 public extension Future.Resolver where T == Void {
     func resolve() {
         self.resolve(value: ())
+    }
+}
+
+public extension Future {
+    static func on(_ dispatchQueue: DispatchQueue, block: @escaping (Future<T, E>.Resolver) -> Void) -> Future<T, E> {
+        return Future { resolver in
+            dispatchQueue.async { block(resolver) }
+        }
     }
 }
